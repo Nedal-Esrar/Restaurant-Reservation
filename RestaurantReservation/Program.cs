@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using System.Text;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -533,10 +534,7 @@ await repo.DeleteTableAsync(table.TableId);
 
 var managers = await repo.ListManagersAsync();
 
-foreach (var e in managers)
-{
-  Console.WriteLine($"{e.EmployeeId},{e.FirstName},{e.LastName}");
-}
+foreach (var e in managers) Console.WriteLine($"{e.EmployeeId},{e.FirstName},{e.LastName}");
 
 #endregion
 
@@ -558,3 +556,26 @@ foreach (var r in reservations)
     $"{r.ReservationId},{r.CustomerId},{r.RestaurantId},{r.TableId},{r.ReservationDate},{r.PartySize}");
 
 #endregion
+
+#region List Orders And MenuItems
+
+try
+{
+  await repo.ListOrdersAndMenuItemsAsync(1111);
+}
+catch (NotFoundException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+var orders = await repo.ListOrdersAndMenuItemsAsync(1);
+
+foreach (var o in orders)
+  Console.WriteLine(
+    $@"
+        OrderId: {o.OrderId},
+        MenuItems: {o.OrderItems
+          .Aggregate(new StringBuilder(), (acc, x) => acc.Append($"({x.Item.ItemId},{x.Item.Name},{x.Item.RestaurantId},Quantity: {x.Quantity})"))}");
+
+#endregion
+
