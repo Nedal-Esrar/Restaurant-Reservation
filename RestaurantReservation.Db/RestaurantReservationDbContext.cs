@@ -23,6 +23,8 @@ public class RestaurantReservationDbContext : DbContext
   public DbSet<Reservation> Reservations { get; set; }
 
   public DbSet<Restaurant> Restaurants { get; set; }
+  
+  public DbSet<ReservationWithDetails> ReservationsWithDetails { get; set; }
 
   public DbSet<Table> Tables { get; set; }
 
@@ -31,5 +33,7 @@ public class RestaurantReservationDbContext : DbContext
     modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     
     DataSeeding.Seed(modelBuilder);
+
+    modelBuilder.Entity<ReservationWithDetails>().HasNoKey().ToView(nameof(ReservationsWithDetails));
   }
 }
