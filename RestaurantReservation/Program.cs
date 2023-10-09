@@ -613,3 +613,12 @@ var averageOrderAmount = await repo.CalculateAverageOrderAmountAsync(1);
 Console.WriteLine($"Average Order Amount for Customer with id 1: {averageOrderAmount}");
 
 #endregion
+
+#region Get All Reservations With Details
+
+foreach (var r in await repo.GetReservationsWithDetailsAsync())
+{
+  Console.WriteLine($"{r.ReservationId},{r.CustomerId},{r.ReservationId}");
+}
+
+#endregion
