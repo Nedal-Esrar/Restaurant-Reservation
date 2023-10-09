@@ -597,3 +597,19 @@ foreach (var orderedItem in orderedItems)
 
 #endregion
 
+#region Calculate Average Order Amount
+
+try
+{
+  await repo.CalculateAverageOrderAmountAsync(1111);
+}
+catch (NotFoundException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+var averageOrderAmount = await repo.CalculateAverageOrderAmountAsync(1);
+
+Console.WriteLine($"Average Order Amount for Customer with id 1: {averageOrderAmount}");
+
+#endregion
