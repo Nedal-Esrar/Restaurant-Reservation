@@ -348,4 +348,18 @@ public class RestaurantReservationRepository
       .Distinct()
       .ToListAsync();
   }
+  
+  public async Task<double> CalculateAverageOrderAmountAsync(int employeeId)
+  {
+    if (!await DoesEmployeeExistAsync(employeeId))
+    {
+      throw new NotFoundException(StandardMessages.GenerateNotFoundMessage("Employee", employeeId));
+    }
+    
+    var avg = await _context.Orders
+      .Where(o => o.EmployeeId == employeeId)
+      .AverageAsync(o => o.TotalAmount);
+
+    return avg;
+  }
 }
