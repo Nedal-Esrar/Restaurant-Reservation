@@ -337,3 +337,69 @@ catch (NotFoundException e)
 await repo.DeleteOrderItemAsync(orderItem.OrderItemId);
 
 #endregion
+
+#region Reservation Create
+
+try
+{
+  await repo.CreateReservationAsync(null);
+}
+catch (ArgumentNullException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+var reservation = new Reservation
+{
+  CustomerId = 1,
+  RestaurantId = 1,
+  TableId = 1,
+  ReservationDate = DateTime.Now,
+  PartySize = 5
+};
+
+await repo.CreateReservationAsync(reservation);
+
+#endregion
+
+#region Reservation Update
+
+try
+{
+  await repo.UpdateReservationAsync(null);
+}
+catch (ArgumentNullException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+try
+{
+  await repo.UpdateReservationAsync(new Reservation { ReservationId = 1111 });
+}
+catch (NotFoundException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+reservation.PartySize = 6;
+
+await repo.UpdateReservationAsync(reservation);
+
+#endregion
+
+#region Reservation Delete
+
+try
+{
+  await repo.DeleteReservationAsync(1111);
+}
+catch (NotFoundException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+await repo.DeleteReservationAsync(reservation.ReservationId);
+
+#endregion
+
