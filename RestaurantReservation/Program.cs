@@ -211,3 +211,66 @@ await repo.DeleteMenuItemAsync(menuItem.ItemId);
 
 #endregion
 
+#region Order Create
+
+try
+{
+  await repo.CreateOrderAsync(null);
+}
+catch (ArgumentNullException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+var order = new Order
+{
+  ReservationId = 1,
+  EmployeeId = 1,
+  OrderDate = DateTime.Now,
+  TotalAmount = 1
+};
+
+await repo.CreateOrderAsync(order);
+
+#endregion
+
+#region Order Update
+
+try
+{
+  await repo.UpdateOrderAsync(null);
+}
+catch (ArgumentNullException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+try
+{
+  await repo.UpdateOrderAsync(new Order { OrderId = 1111 });
+}
+catch (NotFoundException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+order.TotalAmount = 2;
+
+await repo.UpdateOrderAsync(order);
+
+#endregion
+
+#region Order Delete
+
+try
+{
+  await repo.DeleteOrderAsync(1111);
+}
+catch (NotFoundException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+await repo.DeleteOrderAsync(order.OrderId);
+
+#endregion
