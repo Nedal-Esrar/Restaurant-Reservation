@@ -25,6 +25,8 @@ public class RestaurantReservationDbContext : DbContext
   public DbSet<Restaurant> Restaurants { get; set; }
   
   public DbSet<ReservationWithDetails> ReservationsWithDetails { get; set; }
+  
+  public DbSet<EmployeeWithDetails> EmployeesWithDetails { get; set; }
 
   public DbSet<Table> Tables { get; set; }
 
@@ -35,5 +37,7 @@ public class RestaurantReservationDbContext : DbContext
     DataSeeding.Seed(modelBuilder);
 
     modelBuilder.Entity<ReservationWithDetails>().HasNoKey().ToView(nameof(ReservationsWithDetails));
+    
+    modelBuilder.Entity<EmployeeWithDetails>().HasNoKey().ToView(nameof(EmployeesWithDetails));
   }
 }
