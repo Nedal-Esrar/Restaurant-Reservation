@@ -362,4 +362,9 @@ public class RestaurantReservationRepository
 
     return avg;
   }
+
+  public async Task<IEnumerable<ReservationWithDetails>> GetReservationsWithDetailsAsync()
+  {
+    return await _context.ReservationsWithDetails.ToListAsync();
+  }
 }
