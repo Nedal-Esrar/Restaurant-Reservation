@@ -49,7 +49,7 @@ public class CustomerRepository : ICustomerRepository
     return await _context.Customers.AnyAsync(c => c.CustomerId == id);
   }
 
-  public async Task<IEnumerable<Customer>> GetCustomersWithLargePartiesAsync(int minPartySize)
+  public async Task<IEnumerable<Customer>> FindCustomersWithPartySizeLargerThanAsync(int minPartySize)
   {
     return await _context.Customers
       .FromSqlInterpolated($"EXEC sp_FindCustomersWithPartySizeLargerThan {minPartySize}")

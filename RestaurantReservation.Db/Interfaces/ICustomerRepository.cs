@@ -12,5 +12,5 @@ public interface ICustomerRepository
 
   Task<bool> IsExistAsync(int id);
 
-  Task<IEnumerable<Customer>> GetCustomersWithLargePartiesAsync(int minPartySize);
+  Task<IEnumerable<Customer>> FindCustomersWithPartySizeLargerThanAsync(int minPartySize);
 }
