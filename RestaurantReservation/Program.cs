@@ -274,3 +274,66 @@ catch (NotFoundException e)
 await repo.DeleteOrderAsync(order.OrderId);
 
 #endregion
+
+#region OrderItem Create
+
+try
+{
+  await repo.CreateOrderItemAsync(null);
+}
+catch (ArgumentNullException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+var orderItem = new OrderItem
+{
+  OrderId = 1,
+  ItemId = 1,
+  Quantity = 3
+};
+
+await repo.CreateOrderItemAsync(orderItem);
+
+#endregion
+
+#region OrderItem Update
+
+try
+{
+  await repo.UpdateOrderItemAsync(null);
+}
+catch (ArgumentNullException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+try
+{
+  await repo.UpdateOrderItemAsync(new OrderItem { OrderItemId = 1111 });
+}
+catch (NotFoundException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+orderItem.Quantity = 314;
+
+await repo.UpdateOrderItemAsync(orderItem);
+
+#endregion
+
+#region OrderItem Delete
+
+try
+{
+  await repo.DeleteOrderItemAsync(1111);
+}
+catch (NotFoundException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+await repo.DeleteOrderItemAsync(orderItem.OrderItemId);
+
+#endregion
