@@ -334,4 +334,18 @@ public class RestaurantReservationRepository
       .ThenInclude(oi => oi.Item)
       .ToListAsync();
   }
+  
+  public async Task<IEnumerable<MenuItem>> ListOrderedMenuItemsAsync(int reservationId)
+  {
+    if (!await DoesReservationExist(reservationId))
+    {
+      throw new NotFoundException(StandardMessages.GenerateNotFoundMessage("Reservation", reservationId));
+    }
+    
+    return await _context.OrderItems
+      .Where(oi => oi.Order.ReservationId == reservationId)
+      .Select(oi => oi.Item)
+      .Distinct()
+      .ToListAsync();
+  }
 }
