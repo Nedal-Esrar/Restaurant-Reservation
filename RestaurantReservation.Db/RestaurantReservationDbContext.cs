@@ -12,5 +12,7 @@ public class RestaurantReservationDbContext : DbContext
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
+    
+    DataSeeding.Seed(modelBuilder);
   }
 }
