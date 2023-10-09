@@ -288,7 +288,7 @@ public class RestaurantReservationRepository
 
   public async Task<bool> DoesTableExist(int id)
   {
-    return await _context.Tables.AnyAsync(r => r.RestaurantId == id);
+    return await _context.Tables.AnyAsync(r => r.TableId == id);
   }
 
   public async Task DeleteTableAsync(int id)
