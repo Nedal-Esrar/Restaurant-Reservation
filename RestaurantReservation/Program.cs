@@ -622,3 +622,12 @@ foreach (var r in await repo.GetReservationsWithDetailsAsync())
 }
 
 #endregion
+
+#region Get All Employees With Details
+
+foreach (var e in await repo.GetEmployeesWithDetailsAsync())
+{
+  Console.WriteLine($"{e.EmployeeId},{e.RestaurantId},{e.EmployeePosition}");
+}
+
+#endregion
