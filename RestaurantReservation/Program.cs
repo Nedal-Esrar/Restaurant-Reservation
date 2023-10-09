@@ -579,3 +579,21 @@ foreach (var o in orders)
 
 #endregion
 
+#region List Ordered MenuItems
+
+try
+{
+  await repo.ListOrderedMenuItemsAsync(1111);
+}
+catch (NotFoundException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+var orderedItems = await repo.ListOrderedMenuItemsAsync(1);
+
+foreach (var orderedItem in orderedItems)
+  Console.WriteLine($"{orderedItem.ItemId},{orderedItem.Name},{orderedItem.RestaurantId},{orderedItem.Price}");
+
+#endregion
+
