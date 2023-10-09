@@ -36,7 +36,7 @@ public class TableRepository : ITableRepository
 
   public async Task<bool> IsExistAsync(int id)
   {
-    return await _context.Tables.AnyAsync(r => r.RestaurantId == id);
+    return await _context.Tables.AnyAsync(r => r.TableId == id);
   }
 
   public async Task DeleteAsync(int id)
