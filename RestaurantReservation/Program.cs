@@ -631,3 +631,18 @@ foreach (var e in await repo.GetEmployeesWithDetailsAsync())
 }
 
 #endregion
+
+#region CalculateRestaurantRevenue
+
+try
+{
+  await repo.CalculateRestaurantRevenueAsync(1111);
+}
+catch (NotFoundException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+Console.WriteLine(await repo.CalculateRestaurantRevenueAsync(1));
+
+#endregion
