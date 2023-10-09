@@ -466,3 +466,65 @@ catch (NotFoundException e)
 await repo.DeleteRestaurantAsync(restaurant.RestaurantId);
 
 #endregion
+
+#region Table Create
+
+try
+{
+  await repo.CreateTableAsync(null);
+}
+catch (ArgumentNullException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+var table = new Table
+{
+  RestaurantId = 1,
+  Capacity = 134134
+};
+
+await repo.CreateTableAsync(table);
+
+#endregion
+
+#region Table Update
+
+try
+{
+  await repo.UpdateTableAsync(null);
+}
+catch (ArgumentNullException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+try
+{
+  await repo.UpdateTableAsync(new Table { TableId = 1111 });
+}
+catch (NotFoundException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+table.Capacity = 4;
+
+await repo.UpdateTableAsync(table);
+
+#endregion
+
+#region Table Delete
+
+try
+{
+  await repo.DeleteTableAsync(1111);
+}
+catch (NotFoundException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+await repo.DeleteTableAsync(table.TableId);
+
+#endregion
