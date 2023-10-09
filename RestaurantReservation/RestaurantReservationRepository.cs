@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Db;
 using RestaurantReservation.Db.Models;
+using RestaurantReservation.Db.Models.Enums;
 
 namespace RestaurantReservation;
 
@@ -299,5 +300,12 @@ public class RestaurantReservationRepository
     _context.Tables.Remove(table);
 
     await _context.SaveChangesAsync();
+  }
+  
+  public async Task<IEnumerable<Employee>> ListManagersAsync()
+  {
+    return await _context.Employees
+      .Where(e => e.Position == EmployeePosition.Manager)
+      .ToListAsync();
   }
 }
