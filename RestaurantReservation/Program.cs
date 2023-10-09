@@ -5,6 +5,7 @@ using Microsoft.Extensions.Hosting;
 using RestaurantReservation;
 using RestaurantReservation.Db;
 using RestaurantReservation.Db.Models;
+using RestaurantReservation.Db.Models.Enums;
 
 static IHostBuilder CreateHostBuilder(string[] args)
 {
@@ -91,3 +92,57 @@ await repo.DeleteCustomerAsync(customer.CustomerId);
 
 #endregion
 
+#region Employee Create
+
+try
+{
+  await repo.CreateEmployeeAsync(null);
+}
+catch (ArgumentNullException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+var employee = new Employee
+{
+  RestaurantId = 1,
+  FirstName = "GG",
+  LastName = "GG",
+  Position = EmployeePosition.Bartender
+};
+
+await repo.CreateEmployeeAsync(employee);
+
+#endregion
+
+#region Employee Update
+
+try
+{
+  await repo.UpdateEmployeeAsync(new Employee { EmployeeId = 1111 });
+}
+catch (NotFoundException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+employee.FirstName = "BG";
+
+await repo.UpdateEmployeeAsync(employee);
+
+#endregion
+
+#region Employee Delete
+
+try
+{
+  await repo.DeleteEmployeeAsync(1111);
+}
+catch (NotFoundException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+await repo.DeleteEmployeeAsync(employee.EmployeeId);
+
+#endregion
