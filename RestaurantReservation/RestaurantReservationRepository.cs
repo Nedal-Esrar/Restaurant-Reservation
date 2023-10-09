@@ -120,4 +120,40 @@ public class RestaurantReservationRepository
 
     await _context.SaveChangesAsync();
   }
+  
+  public async Task CreateOrderAsync(Order order)
+  {
+    if (order is null) throw new ArgumentNullException(nameof(order));
+
+    await _context.Orders.AddAsync(order);
+
+    await _context.SaveChangesAsync();
+  }
+
+  public async Task UpdateOrderAsync(Order order)
+  {
+    if (order is null) throw new ArgumentNullException(nameof(order));
+
+    if (!await DoesOrderExistAsync(order.OrderId))
+      throw new NotFoundException(StandardMessages.GenerateNotFoundMessage("Order", order.OrderId));
+
+    _context.Orders.Update(order);
+
+    await _context.SaveChangesAsync();
+  }
+
+  public async Task<bool> DoesOrderExistAsync(int id)
+  {
+    return await _context.Orders.AnyAsync(o => o.OrderId == id);
+  }
+
+  public async Task DeleteOrderAsync(int id)
+  {
+    var order = await _context.Orders.FindAsync(id) ??
+                throw new NotFoundException(StandardMessages.GenerateNotFoundMessage("Order", id));
+
+    _context.Orders.Remove(order);
+
+    await _context.SaveChangesAsync();
+  }
 }
