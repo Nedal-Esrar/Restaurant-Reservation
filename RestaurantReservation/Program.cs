@@ -539,3 +539,22 @@ foreach (var e in managers)
 }
 
 #endregion
+
+#region Get Reservations By Customer
+
+try
+{
+  await repo.GetReservationsByCustomerAsync(1111);
+}
+catch (NotFoundException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+var reservations = await repo.GetReservationsByCustomerAsync(1);
+
+foreach (var r in reservations)
+  Console.WriteLine(
+    $"{r.ReservationId},{r.CustomerId},{r.RestaurantId},{r.TableId},{r.ReservationDate},{r.PartySize}");
+
+#endregion
