@@ -39,5 +39,14 @@ public class RestaurantReservationDbContext : DbContext
     modelBuilder.Entity<ReservationWithDetails>().HasNoKey().ToView(nameof(ReservationsWithDetails));
     
     modelBuilder.Entity<EmployeeWithDetails>().HasNoKey().ToView(nameof(EmployeesWithDetails));
+    
+    modelBuilder.HasDbFunction(
+      typeof(RestaurantReservationDbContext).GetMethod(
+        nameof(CalculateRestaurantRevenue),
+        new[] { typeof(int) }
+      )!
+    ).HasName("fn_CalculateRestaurantRevenue");
   }
+
+  public decimal CalculateRestaurantRevenue(int restaurantId) => throw new NotSupportedException();
 }
