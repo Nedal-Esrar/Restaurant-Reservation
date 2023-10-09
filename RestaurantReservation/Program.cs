@@ -146,3 +146,68 @@ catch (NotFoundException e)
 await repo.DeleteEmployeeAsync(employee.EmployeeId);
 
 #endregion
+
+#region MenuItem Create
+
+try
+{
+  await repo.CreateMenuItemAsync(null);
+}
+catch (ArgumentNullException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+var menuItem = new MenuItem
+{
+  RestaurantId = 1,
+  Name = "LFJHD",
+  Description = "adfl;hkadfjh",
+  Price = 3134
+};
+
+await repo.CreateMenuItemAsync(menuItem);
+
+#endregion
+
+#region MenuItem Update
+
+try
+{
+  await repo.UpdateMenuItemAsync(null);
+}
+catch (ArgumentNullException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+try
+{
+  await repo.UpdateMenuItemAsync(new MenuItem { ItemId = 1111 });
+}
+catch (NotFoundException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+menuItem.Name = "adfpiadhfiadfadf";
+
+await repo.UpdateMenuItemAsync(menuItem);
+
+#endregion
+
+#region MenuItem Delete
+
+try
+{
+  await repo.DeleteMenuItemAsync(1111);
+}
+catch (NotFoundException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+await repo.DeleteMenuItemAsync(menuItem.ItemId);
+
+#endregion
+
