@@ -308,4 +308,16 @@ public class RestaurantReservationRepository
       .Where(e => e.Position == EmployeePosition.Manager)
       .ToListAsync();
   }
+  
+  public async Task<IEnumerable<Reservation>> GetReservationsByCustomerAsync(int customerId)
+  {
+    if (!await DoesCustomerExistAsync(customerId))
+    {
+      throw new NotFoundException(StandardMessages.GenerateNotFoundMessage("Customer", customerId));
+    }
+    
+    return await _context.Reservations
+      .Where(r => r.CustomerId == customerId)
+      .ToListAsync();
+  }
 }
