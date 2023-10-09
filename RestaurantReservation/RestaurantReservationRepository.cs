@@ -387,4 +387,11 @@ public class RestaurantReservationRepository
 
     return revenue;
   }
+
+  public async Task<IEnumerable<Customer>> FindCustomersWithPartySizeLargerThanAsync(int minPartySize)
+  {
+    return await _context.Customers
+      .FromSqlInterpolated($"EXEC sp_FindCustomersWithPartySizeLargerThan {minPartySize}")
+      .ToListAsync();
+  }
 }
