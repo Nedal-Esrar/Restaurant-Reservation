@@ -20,3 +20,5 @@ static IHostBuilder CreateHostBuilder(string[] args)
       });
     });
 }
+
+var serviceProvider = CreateHostBuilder(args).Build().Services;
