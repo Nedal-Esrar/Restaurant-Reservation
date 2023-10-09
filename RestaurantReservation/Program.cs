@@ -3,10 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using RestaurantReservation;
 using RestaurantReservation.Db;
+using RestaurantReservation.Db.Interfaces;
 using RestaurantReservation.Db.Models;
 using RestaurantReservation.Db.Models.Enums;
+using RestaurantReservation.Db.Repositories;
 
 static IHostBuilder CreateHostBuilder(string[] args)
 {
@@ -14,26 +15,33 @@ static IHostBuilder CreateHostBuilder(string[] args)
     .ConfigureServices(services =>
     {
       services.AddDbContext<RestaurantReservationDbContext>(options =>
-      {
-        var configuration = new ConfigurationBuilder()
-          .AddJsonFile("appsettings.json", false, true)
-          .Build();
+        {
+          var configuration = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json", false, true)
+            .Build();
 
-        options
-          .UseSqlServer(configuration.GetConnectionString("SqlConnection"));
-      }).AddScoped<RestaurantReservationRepository>();
+          options
+            .UseSqlServer(configuration.GetConnectionString("SqlConnection"));
+        }).AddScoped<CustomerRepository>()
+        .AddScoped<EmployeeRepository>()
+        .AddScoped<MenuItemRepository>()
+        .AddScoped<OrderItemRepository>()
+        .AddScoped<OrderRepository>()
+        .AddScoped<ReservationRepository>()
+        .AddScoped<RestaurantRepository>()
+        .AddScoped<TableRepository>();
     });
 }
 
 var serviceProvider = CreateHostBuilder(args).Build().Services;
 
-var repo = serviceProvider.GetRequiredService<RestaurantReservationRepository>();
+var customerRepository = serviceProvider.GetRequiredService<CustomerRepository>();
 
 #region Customer Create
 
 try
 {
-  await repo.CreateCustomerAsync(null);
+  await customerRepository.CreateAsync(null);
 }
 catch (ArgumentNullException e)
 {
@@ -48,7 +56,7 @@ var customer = new Customer
   PhoneNumber = "1111111111"
 };
 
-await repo.CreateCustomerAsync(customer);
+await customerRepository.CreateAsync(customer);
 
 #endregion
 
@@ -56,7 +64,7 @@ await repo.CreateCustomerAsync(customer);
 
 try
 {
-  await repo.UpdateCustomerAsync(null);
+  await customerRepository.UpdateAsync(null);
 }
 catch (ArgumentNullException e)
 {
@@ -65,7 +73,7 @@ catch (ArgumentNullException e)
 
 try
 {
-  await repo.UpdateCustomerAsync(new Customer { CustomerId = 11111111 });
+  await customerRepository.UpdateAsync(new Customer { CustomerId = 11111111 });
 }
 catch (NotFoundException e)
 {
@@ -74,7 +82,7 @@ catch (NotFoundException e)
 
 customer.FirstName = "GGGGGGG";
 
-await repo.UpdateCustomerAsync(customer);
+await customerRepository.UpdateAsync(customer);
 
 #endregion
 
@@ -82,22 +90,24 @@ await repo.UpdateCustomerAsync(customer);
 
 try
 {
-  await repo.DeleteCustomerAsync(1111);
+  await customerRepository.DeleteAsync(1111);
 }
 catch (NotFoundException e)
 {
   Console.WriteLine(e.Message);
 }
 
-await repo.DeleteCustomerAsync(customer.CustomerId);
+await customerRepository.DeleteAsync(customer.CustomerId);
 
 #endregion
+
+var employeeRepository = serviceProvider.GetRequiredService<EmployeeRepository>();
 
 #region Employee Create
 
 try
 {
-  await repo.CreateEmployeeAsync(null);
+  await employeeRepository.CreateAsync(null);
 }
 catch (ArgumentNullException e)
 {
@@ -112,7 +122,7 @@ var employee = new Employee
   Position = EmployeePosition.Bartender
 };
 
-await repo.CreateEmployeeAsync(employee);
+await employeeRepository.CreateAsync(employee);
 
 #endregion
 
@@ -120,7 +130,16 @@ await repo.CreateEmployeeAsync(employee);
 
 try
 {
-  await repo.UpdateEmployeeAsync(new Employee { EmployeeId = 1111 });
+  await employeeRepository.UpdateAsync(null);
+}
+catch (ArgumentNullException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+try
+{
+  await employeeRepository.UpdateAsync(new Employee { EmployeeId = 1111 });
 }
 catch (NotFoundException e)
 {
@@ -129,7 +148,7 @@ catch (NotFoundException e)
 
 employee.FirstName = "BG";
 
-await repo.UpdateEmployeeAsync(employee);
+await employeeRepository.UpdateAsync(employee);
 
 #endregion
 
@@ -137,22 +156,24 @@ await repo.UpdateEmployeeAsync(employee);
 
 try
 {
-  await repo.DeleteEmployeeAsync(1111);
+  await employeeRepository.DeleteAsync(1111);
 }
 catch (NotFoundException e)
 {
   Console.WriteLine(e.Message);
 }
 
-await repo.DeleteEmployeeAsync(employee.EmployeeId);
+await employeeRepository.DeleteAsync(employee.EmployeeId);
 
 #endregion
+
+var menuItemRepository = serviceProvider.GetRequiredService<MenuItemRepository>();
 
 #region MenuItem Create
 
 try
 {
-  await repo.CreateMenuItemAsync(null);
+  await menuItemRepository.CreateAsync(null);
 }
 catch (ArgumentNullException e)
 {
@@ -167,7 +188,7 @@ var menuItem = new MenuItem
   Price = 3134
 };
 
-await repo.CreateMenuItemAsync(menuItem);
+await menuItemRepository.CreateAsync(menuItem);
 
 #endregion
 
@@ -175,7 +196,7 @@ await repo.CreateMenuItemAsync(menuItem);
 
 try
 {
-  await repo.UpdateMenuItemAsync(null);
+  await menuItemRepository.UpdateAsync(null);
 }
 catch (ArgumentNullException e)
 {
@@ -184,7 +205,7 @@ catch (ArgumentNullException e)
 
 try
 {
-  await repo.UpdateMenuItemAsync(new MenuItem { ItemId = 1111 });
+  await menuItemRepository.UpdateAsync(new MenuItem { ItemId = 1111 });
 }
 catch (NotFoundException e)
 {
@@ -193,7 +214,7 @@ catch (NotFoundException e)
 
 menuItem.Name = "adfpiadhfiadfadf";
 
-await repo.UpdateMenuItemAsync(menuItem);
+await menuItemRepository.UpdateAsync(menuItem);
 
 #endregion
 
@@ -201,22 +222,24 @@ await repo.UpdateMenuItemAsync(menuItem);
 
 try
 {
-  await repo.DeleteMenuItemAsync(1111);
+  await menuItemRepository.DeleteAsync(1111);
 }
 catch (NotFoundException e)
 {
   Console.WriteLine(e.Message);
 }
 
-await repo.DeleteMenuItemAsync(menuItem.ItemId);
+await menuItemRepository.DeleteAsync(menuItem.ItemId);
 
 #endregion
+
+var orderRepository = serviceProvider.GetRequiredService<OrderRepository>();
 
 #region Order Create
 
 try
 {
-  await repo.CreateOrderAsync(null);
+  await orderRepository.CreateAsync(null);
 }
 catch (ArgumentNullException e)
 {
@@ -231,7 +254,7 @@ var order = new Order
   TotalAmount = 1
 };
 
-await repo.CreateOrderAsync(order);
+await orderRepository.CreateAsync(order);
 
 #endregion
 
@@ -239,7 +262,7 @@ await repo.CreateOrderAsync(order);
 
 try
 {
-  await repo.UpdateOrderAsync(null);
+  await orderRepository.UpdateAsync(null);
 }
 catch (ArgumentNullException e)
 {
@@ -248,7 +271,7 @@ catch (ArgumentNullException e)
 
 try
 {
-  await repo.UpdateOrderAsync(new Order { OrderId = 1111 });
+  await orderRepository.UpdateAsync(new Order { OrderId = 1111 });
 }
 catch (NotFoundException e)
 {
@@ -257,7 +280,7 @@ catch (NotFoundException e)
 
 order.TotalAmount = 2;
 
-await repo.UpdateOrderAsync(order);
+await orderRepository.UpdateAsync(order);
 
 #endregion
 
@@ -265,22 +288,24 @@ await repo.UpdateOrderAsync(order);
 
 try
 {
-  await repo.DeleteOrderAsync(1111);
+  await orderRepository.DeleteAsync(1111);
 }
 catch (NotFoundException e)
 {
   Console.WriteLine(e.Message);
 }
 
-await repo.DeleteOrderAsync(order.OrderId);
+await orderRepository.DeleteAsync(order.OrderId);
 
 #endregion
+
+var orderItemRepository = serviceProvider.GetRequiredService<OrderItemRepository>();
 
 #region OrderItem Create
 
 try
 {
-  await repo.CreateOrderItemAsync(null);
+  await orderItemRepository.CreateAsync(null);
 }
 catch (ArgumentNullException e)
 {
@@ -294,7 +319,7 @@ var orderItem = new OrderItem
   Quantity = 3
 };
 
-await repo.CreateOrderItemAsync(orderItem);
+await orderItemRepository.CreateAsync(orderItem);
 
 #endregion
 
@@ -302,7 +327,7 @@ await repo.CreateOrderItemAsync(orderItem);
 
 try
 {
-  await repo.UpdateOrderItemAsync(null);
+  await orderItemRepository.UpdateAsync(null);
 }
 catch (ArgumentNullException e)
 {
@@ -311,7 +336,7 @@ catch (ArgumentNullException e)
 
 try
 {
-  await repo.UpdateOrderItemAsync(new OrderItem { OrderItemId = 1111 });
+  await orderItemRepository.UpdateAsync(new OrderItem { OrderItemId = 1111 });
 }
 catch (NotFoundException e)
 {
@@ -320,7 +345,7 @@ catch (NotFoundException e)
 
 orderItem.Quantity = 314;
 
-await repo.UpdateOrderItemAsync(orderItem);
+await orderItemRepository.UpdateAsync(orderItem);
 
 #endregion
 
@@ -328,22 +353,24 @@ await repo.UpdateOrderItemAsync(orderItem);
 
 try
 {
-  await repo.DeleteOrderItemAsync(1111);
+  await orderItemRepository.DeleteAsync(1111);
 }
 catch (NotFoundException e)
 {
   Console.WriteLine(e.Message);
 }
 
-await repo.DeleteOrderItemAsync(orderItem.OrderItemId);
+await orderItemRepository.DeleteAsync(orderItem.OrderItemId);
 
 #endregion
+
+var reservationRepository = serviceProvider.GetRequiredService<ReservationRepository>();
 
 #region Reservation Create
 
 try
 {
-  await repo.CreateReservationAsync(null);
+  await reservationRepository.CreateAsync(null);
 }
 catch (ArgumentNullException e)
 {
@@ -359,7 +386,7 @@ var reservation = new Reservation
   PartySize = 5
 };
 
-await repo.CreateReservationAsync(reservation);
+await reservationRepository.CreateAsync(reservation);
 
 #endregion
 
@@ -367,7 +394,7 @@ await repo.CreateReservationAsync(reservation);
 
 try
 {
-  await repo.UpdateReservationAsync(null);
+  await reservationRepository.UpdateAsync(null);
 }
 catch (ArgumentNullException e)
 {
@@ -376,7 +403,7 @@ catch (ArgumentNullException e)
 
 try
 {
-  await repo.UpdateReservationAsync(new Reservation { ReservationId = 1111 });
+  await reservationRepository.UpdateAsync(new Reservation { ReservationId = 1111 });
 }
 catch (NotFoundException e)
 {
@@ -385,7 +412,7 @@ catch (NotFoundException e)
 
 reservation.PartySize = 6;
 
-await repo.UpdateReservationAsync(reservation);
+await reservationRepository.UpdateAsync(reservation);
 
 #endregion
 
@@ -393,22 +420,24 @@ await repo.UpdateReservationAsync(reservation);
 
 try
 {
-  await repo.DeleteReservationAsync(1111);
+  await reservationRepository.DeleteAsync(1111);
 }
 catch (NotFoundException e)
 {
   Console.WriteLine(e.Message);
 }
 
-await repo.DeleteReservationAsync(reservation.ReservationId);
+await reservationRepository.DeleteAsync(reservation.ReservationId);
 
 #endregion
+
+var restaurantRepository = serviceProvider.GetRequiredService<RestaurantRepository>();
 
 #region Restaurant Create
 
 try
 {
-  await repo.CreateRestaurantAsync(null);
+  await restaurantRepository.CreateAsync(null);
 }
 catch (ArgumentNullException e)
 {
@@ -423,7 +452,7 @@ var restaurant = new Restaurant
   OpeningHours = "02:00-14:00"
 };
 
-await repo.CreateRestaurantAsync(restaurant);
+await restaurantRepository.CreateAsync(restaurant);
 
 #endregion
 
@@ -431,7 +460,7 @@ await repo.CreateRestaurantAsync(restaurant);
 
 try
 {
-  await repo.UpdateRestaurantAsync(null);
+  await restaurantRepository.UpdateAsync(null);
 }
 catch (ArgumentNullException e)
 {
@@ -440,7 +469,7 @@ catch (ArgumentNullException e)
 
 try
 {
-  await repo.UpdateRestaurantAsync(new Restaurant { RestaurantId = 1111 });
+  await restaurantRepository.UpdateAsync(new Restaurant { RestaurantId = 1111 });
 }
 catch (NotFoundException e)
 {
@@ -449,7 +478,7 @@ catch (NotFoundException e)
 
 restaurant.Name = "YOU WILL NOT EAT HERE";
 
-await repo.UpdateRestaurantAsync(restaurant);
+await restaurantRepository.UpdateAsync(restaurant);
 
 #endregion
 
@@ -457,22 +486,24 @@ await repo.UpdateRestaurantAsync(restaurant);
 
 try
 {
-  await repo.DeleteRestaurantAsync(1111);
+  await restaurantRepository.DeleteAsync(1111);
 }
 catch (NotFoundException e)
 {
   Console.WriteLine(e.Message);
 }
 
-await repo.DeleteRestaurantAsync(restaurant.RestaurantId);
+await restaurantRepository.DeleteAsync(restaurant.RestaurantId);
 
 #endregion
+
+var tableRepository = serviceProvider.GetRequiredService<TableRepository>();
 
 #region Table Create
 
 try
 {
-  await repo.CreateTableAsync(null);
+  await tableRepository.CreateAsync(null);
 }
 catch (ArgumentNullException e)
 {
@@ -485,7 +516,7 @@ var table = new Table
   Capacity = 134134
 };
 
-await repo.CreateTableAsync(table);
+await tableRepository.CreateAsync(table);
 
 #endregion
 
@@ -493,7 +524,7 @@ await repo.CreateTableAsync(table);
 
 try
 {
-  await repo.UpdateTableAsync(null);
+  await tableRepository.UpdateAsync(null);
 }
 catch (ArgumentNullException e)
 {
@@ -502,7 +533,7 @@ catch (ArgumentNullException e)
 
 try
 {
-  await repo.UpdateTableAsync(new Table { TableId = 1111 });
+  await tableRepository.UpdateAsync(new Table { TableId = 1111 });
 }
 catch (NotFoundException e)
 {
@@ -511,7 +542,7 @@ catch (NotFoundException e)
 
 table.Capacity = 4;
 
-await repo.UpdateTableAsync(table);
+await tableRepository.UpdateAsync(table);
 
 #endregion
 
@@ -519,20 +550,20 @@ await repo.UpdateTableAsync(table);
 
 try
 {
-  await repo.DeleteTableAsync(1111);
+  await tableRepository.DeleteAsync(1111);
 }
 catch (NotFoundException e)
 {
   Console.WriteLine(e.Message);
 }
 
-await repo.DeleteTableAsync(table.TableId);
+await tableRepository.DeleteAsync(table.TableId);
 
 #endregion
 
 #region List All Managers
 
-var managers = await repo.ListManagersAsync();
+var managers = await employeeRepository.ListManagersAsync();
 
 foreach (var e in managers) Console.WriteLine($"{e.EmployeeId},{e.FirstName},{e.LastName}");
 
@@ -542,14 +573,14 @@ foreach (var e in managers) Console.WriteLine($"{e.EmployeeId},{e.FirstName},{e.
 
 try
 {
-  await repo.GetReservationsByCustomerAsync(1111);
+  await reservationRepository.GetReservationsByCustomerAsync(1111);
 }
 catch (NotFoundException e)
 {
   Console.WriteLine(e.Message);
 }
 
-var reservations = await repo.GetReservationsByCustomerAsync(1);
+var reservations = await reservationRepository.GetReservationsByCustomerAsync(1);
 
 foreach (var r in reservations)
   Console.WriteLine(
@@ -561,14 +592,14 @@ foreach (var r in reservations)
 
 try
 {
-  await repo.ListOrdersAndMenuItemsAsync(1111);
+  await orderRepository.ListOrdersAndMenuItemsAsync(1111);
 }
 catch (NotFoundException e)
 {
   Console.WriteLine(e.Message);
 }
 
-var orders = await repo.ListOrdersAndMenuItemsAsync(1);
+var orders = await orderRepository.ListOrdersAndMenuItemsAsync(1);
 
 foreach (var o in orders)
   Console.WriteLine(
@@ -583,14 +614,14 @@ foreach (var o in orders)
 
 try
 {
-  await repo.ListOrderedMenuItemsAsync(1111);
+  await menuItemRepository.ListOrderedMenuItemsAsync(1111);
 }
 catch (NotFoundException e)
 {
   Console.WriteLine(e.Message);
 }
 
-var orderedItems = await repo.ListOrderedMenuItemsAsync(1);
+var orderedItems = await menuItemRepository.ListOrderedMenuItemsAsync(1);
 
 foreach (var orderedItem in orderedItems)
   Console.WriteLine($"{orderedItem.ItemId},{orderedItem.Name},{orderedItem.RestaurantId},{orderedItem.Price}");
@@ -601,14 +632,14 @@ foreach (var orderedItem in orderedItems)
 
 try
 {
-  await repo.CalculateAverageOrderAmountAsync(1111);
+  await orderRepository.CalculateAverageOrderAmountAsync(1111);
 }
 catch (NotFoundException e)
 {
   Console.WriteLine(e.Message);
 }
 
-var averageOrderAmount = await repo.CalculateAverageOrderAmountAsync(1);
+var averageOrderAmount = await orderRepository.CalculateAverageOrderAmountAsync(1);
 
 Console.WriteLine($"Average Order Amount for Customer with id 1: {averageOrderAmount}");
 
@@ -616,19 +647,15 @@ Console.WriteLine($"Average Order Amount for Customer with id 1: {averageOrderAm
 
 #region Get All Reservations With Details
 
-foreach (var r in await repo.GetReservationsWithDetailsAsync())
-{
+foreach (var r in await reservationRepository.GetReservationsWithDetailsAsync())
   Console.WriteLine($"{r.ReservationId},{r.CustomerId},{r.ReservationId}");
-}
 
 #endregion
 
 #region Get All Employees With Details
 
-foreach (var e in await repo.GetEmployeesWithDetailsAsync())
-{
+foreach (var e in await employeeRepository.GetEmployeesWithDetailsAsync())
   Console.WriteLine($"{e.EmployeeId},{e.RestaurantId},{e.EmployeePosition}");
-}
 
 #endregion
 
@@ -636,22 +663,20 @@ foreach (var e in await repo.GetEmployeesWithDetailsAsync())
 
 try
 {
-  await repo.CalculateRestaurantRevenueAsync(1111);
+  await restaurantRepository.CalculateRestaurantRevenueAsync(1111);
 }
 catch (NotFoundException e)
 {
   Console.WriteLine(e.Message);
 }
 
-Console.WriteLine(await repo.CalculateRestaurantRevenueAsync(1));
+Console.WriteLine(await restaurantRepository.CalculateRestaurantRevenueAsync(1));
 
 #endregion
 
 #region FindCustomersWithPartySizeLargerThan
 
-foreach (var c in await repo.FindCustomersWithPartySizeLargerThanAsync(3))
-{
+foreach (var c in await customerRepository.FindCustomersWithPartySizeLargerThanAsync(3))
   Console.WriteLine(c.CustomerId);
-}
 
 #endregion
