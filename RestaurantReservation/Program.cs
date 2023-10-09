@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using RestaurantReservation;
 using RestaurantReservation.Db;
 
 static IHostBuilder CreateHostBuilder(string[] args)
@@ -17,7 +18,7 @@ static IHostBuilder CreateHostBuilder(string[] args)
 
         options
           .UseSqlServer(configuration.GetConnectionString("SqlConnection"));
-      });
+      }).AddScoped<RestaurantReservationRepository>();
     });
 }
 
