@@ -367,4 +367,9 @@ public class RestaurantReservationRepository
   {
     return await _context.ReservationsWithDetails.ToListAsync();
   }
+
+  public async Task<IEnumerable<EmployeeWithDetails>> GetEmployeesWithDetailsAsync()
+  {
+    return await _context.EmployeesWithDetails.ToListAsync();
+  }
 }
