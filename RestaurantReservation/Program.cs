@@ -403,3 +403,66 @@ await repo.DeleteReservationAsync(reservation.ReservationId);
 
 #endregion
 
+#region Restaurant Create
+
+try
+{
+  await repo.CreateRestaurantAsync(null);
+}
+catch (ArgumentNullException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+var restaurant = new Restaurant
+{
+  Name = "THIS IS WHERE YOU WILL EAT",
+  Address = "GG/GG/GG/GG",
+  PhoneNumber = "3148679",
+  OpeningHours = "02:00-14:00"
+};
+
+await repo.CreateRestaurantAsync(restaurant);
+
+#endregion
+
+#region Restaurant Update
+
+try
+{
+  await repo.UpdateRestaurantAsync(null);
+}
+catch (ArgumentNullException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+try
+{
+  await repo.UpdateRestaurantAsync(new Restaurant { RestaurantId = 1111 });
+}
+catch (NotFoundException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+restaurant.Name = "YOU WILL NOT EAT HERE";
+
+await repo.UpdateRestaurantAsync(restaurant);
+
+#endregion
+
+#region Restaurant Delete
+
+try
+{
+  await repo.DeleteRestaurantAsync(1111);
+}
+catch (NotFoundException e)
+{
+  Console.WriteLine(e.Message);
+}
+
+await repo.DeleteRestaurantAsync(restaurant.RestaurantId);
+
+#endregion
