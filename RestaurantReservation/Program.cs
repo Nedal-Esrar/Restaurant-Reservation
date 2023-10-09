@@ -646,3 +646,12 @@ catch (NotFoundException e)
 Console.WriteLine(await repo.CalculateRestaurantRevenueAsync(1));
 
 #endregion
+
+#region FindCustomersWithPartySizeLargerThan
+
+foreach (var c in await repo.FindCustomersWithPartySizeLargerThanAsync(3))
+{
+  Console.WriteLine(c.CustomerId);
+}
+
+#endregion
