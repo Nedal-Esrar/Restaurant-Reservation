@@ -372,4 +372,19 @@ public class RestaurantReservationRepository
   {
     return await _context.EmployeesWithDetails.ToListAsync();
   }
+
+  public async Task<decimal> CalculateRestaurantRevenueAsync(int restaurantId)
+  {
+    if (!await DoesRestaurantExist(restaurantId))
+    {
+      throw new NotFoundException(StandardMessages.GenerateNotFoundMessage("Restaurant", restaurantId));
+    }
+
+    var revenue = await _context.Restaurants
+      .Where(r => r.RestaurantId == restaurantId)
+      .Select(r => _context.CalculateRestaurantRevenue(r.RestaurantId))
+      .FirstOrDefaultAsync();
+
+    return revenue;
+  }
 }
