@@ -528,3 +528,14 @@ catch (NotFoundException e)
 await repo.DeleteTableAsync(table.TableId);
 
 #endregion
+
+#region List All Managers
+
+var managers = await repo.ListManagersAsync();
+
+foreach (var e in managers)
+{
+  Console.WriteLine($"{e.EmployeeId},{e.FirstName},{e.LastName}");
+}
+
+#endregion
