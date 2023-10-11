@@ -73,7 +73,7 @@ catch (ArgumentNullException e)
 
 try
 {
-  await customerRepository.UpdateAsync(new Customer { CustomerId = 11111111 });
+  await customerRepository.UpdateAsync(new Customer { Id = 11111111 });
 }
 catch (NotFoundException e)
 {
@@ -97,7 +97,7 @@ catch (NotFoundException e)
   Console.WriteLine(e.Message);
 }
 
-await customerRepository.DeleteAsync(customer.CustomerId);
+await customerRepository.DeleteAsync(customer.Id);
 
 #endregion
 
@@ -139,7 +139,7 @@ catch (ArgumentNullException e)
 
 try
 {
-  await employeeRepository.UpdateAsync(new Employee { EmployeeId = 1111 });
+  await employeeRepository.UpdateAsync(new Employee { Id = 1111 });
 }
 catch (NotFoundException e)
 {
@@ -163,7 +163,7 @@ catch (NotFoundException e)
   Console.WriteLine(e.Message);
 }
 
-await employeeRepository.DeleteAsync(employee.EmployeeId);
+await employeeRepository.DeleteAsync(employee.Id);
 
 #endregion
 
@@ -205,7 +205,7 @@ catch (ArgumentNullException e)
 
 try
 {
-  await menuItemRepository.UpdateAsync(new MenuItem { ItemId = 1111 });
+  await menuItemRepository.UpdateAsync(new MenuItem { Id = 1111 });
 }
 catch (NotFoundException e)
 {
@@ -229,7 +229,7 @@ catch (NotFoundException e)
   Console.WriteLine(e.Message);
 }
 
-await menuItemRepository.DeleteAsync(menuItem.ItemId);
+await menuItemRepository.DeleteAsync(menuItem.Id);
 
 #endregion
 
@@ -271,7 +271,7 @@ catch (ArgumentNullException e)
 
 try
 {
-  await orderRepository.UpdateAsync(new Order { OrderId = 1111 });
+  await orderRepository.UpdateAsync(new Order { Id = 1111 });
 }
 catch (NotFoundException e)
 {
@@ -295,7 +295,7 @@ catch (NotFoundException e)
   Console.WriteLine(e.Message);
 }
 
-await orderRepository.DeleteAsync(order.OrderId);
+await orderRepository.DeleteAsync(order.Id);
 
 #endregion
 
@@ -336,7 +336,7 @@ catch (ArgumentNullException e)
 
 try
 {
-  await orderItemRepository.UpdateAsync(new OrderItem { OrderItemId = 1111 });
+  await orderItemRepository.UpdateAsync(new OrderItem { Id = 1111 });
 }
 catch (NotFoundException e)
 {
@@ -360,7 +360,7 @@ catch (NotFoundException e)
   Console.WriteLine(e.Message);
 }
 
-await orderItemRepository.DeleteAsync(orderItem.OrderItemId);
+await orderItemRepository.DeleteAsync(orderItem.Id);
 
 #endregion
 
@@ -403,7 +403,7 @@ catch (ArgumentNullException e)
 
 try
 {
-  await reservationRepository.UpdateAsync(new Reservation { ReservationId = 1111 });
+  await reservationRepository.UpdateAsync(new Reservation { Id = 1111 });
 }
 catch (NotFoundException e)
 {
@@ -427,7 +427,7 @@ catch (NotFoundException e)
   Console.WriteLine(e.Message);
 }
 
-await reservationRepository.DeleteAsync(reservation.ReservationId);
+await reservationRepository.DeleteAsync(reservation.Id);
 
 #endregion
 
@@ -469,7 +469,7 @@ catch (ArgumentNullException e)
 
 try
 {
-  await restaurantRepository.UpdateAsync(new Restaurant { RestaurantId = 1111 });
+  await restaurantRepository.UpdateAsync(new Restaurant { Id = 1111 });
 }
 catch (NotFoundException e)
 {
@@ -493,7 +493,7 @@ catch (NotFoundException e)
   Console.WriteLine(e.Message);
 }
 
-await restaurantRepository.DeleteAsync(restaurant.RestaurantId);
+await restaurantRepository.DeleteAsync(restaurant.Id);
 
 #endregion
 
@@ -533,7 +533,7 @@ catch (ArgumentNullException e)
 
 try
 {
-  await tableRepository.UpdateAsync(new Table { TableId = 1111 });
+  await tableRepository.UpdateAsync(new Table { Id = 1111 });
 }
 catch (NotFoundException e)
 {
@@ -557,7 +557,7 @@ catch (NotFoundException e)
   Console.WriteLine(e.Message);
 }
 
-await tableRepository.DeleteAsync(table.TableId);
+await tableRepository.DeleteAsync(table.Id);
 
 #endregion
 
@@ -565,7 +565,7 @@ await tableRepository.DeleteAsync(table.TableId);
 
 var managers = await employeeRepository.ListManagersAsync();
 
-foreach (var e in managers) Console.WriteLine($"{e.EmployeeId},{e.FirstName},{e.LastName}");
+foreach (var e in managers) Console.WriteLine($"{e.Id},{e.FirstName},{e.LastName}");
 
 #endregion
 
@@ -584,7 +584,7 @@ var reservations = await reservationRepository.GetReservationsByCustomerAsync(1)
 
 foreach (var r in reservations)
   Console.WriteLine(
-    $"{r.ReservationId},{r.CustomerId},{r.RestaurantId},{r.TableId},{r.ReservationDate},{r.PartySize}");
+    $"{r.Id},{r.CustomerId},{r.RestaurantId},{r.TableId},{r.ReservationDate},{r.PartySize}");
 
 #endregion
 
@@ -604,9 +604,9 @@ var orders = await orderRepository.ListOrdersAndMenuItemsAsync(1);
 foreach (var o in orders)
   Console.WriteLine(
     $@"
-        OrderId: {o.OrderId},
+        OrderId: {o.Id},
         MenuItems: {o.OrderItems
-          .Aggregate(new StringBuilder(), (acc, x) => acc.Append($"({x.Item.ItemId},{x.Item.Name},{x.Item.RestaurantId},Quantity: {x.Quantity})"))}");
+          .Aggregate(new StringBuilder(), (acc, x) => acc.Append($"({x.Item.Id},{x.Item.Name},{x.Item.RestaurantId},Quantity: {x.Quantity})"))}");
 
 #endregion
 
@@ -624,7 +624,7 @@ catch (NotFoundException e)
 var orderedItems = await menuItemRepository.ListOrderedMenuItemsAsync(1);
 
 foreach (var orderedItem in orderedItems)
-  Console.WriteLine($"{orderedItem.ItemId},{orderedItem.Name},{orderedItem.RestaurantId},{orderedItem.Price}");
+  Console.WriteLine($"{orderedItem.Id},{orderedItem.Name},{orderedItem.RestaurantId},{orderedItem.Price}");
 
 #endregion
 
@@ -677,6 +677,6 @@ Console.WriteLine(await restaurantRepository.CalculateRestaurantRevenueAsync(1))
 #region FindCustomersWithPartySizeLargerThan
 
 foreach (var c in await customerRepository.FindCustomersWithPartySizeLargerThanAsync(3))
-  Console.WriteLine(c.CustomerId);
+  Console.WriteLine(c.Id);
 
 #endregion
