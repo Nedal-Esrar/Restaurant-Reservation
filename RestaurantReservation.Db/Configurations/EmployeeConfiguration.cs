@@ -8,7 +8,7 @@ public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
 {
   public void Configure(EntityTypeBuilder<Employee> builder)
   {
-    builder.Property(e => e.EmployeeId).HasColumnName("employee_id");
+    builder.Property(e => e.Id).HasColumnName("employee_id");
     builder.Property(e => e.FirstName).HasColumnName("first_name");
     builder.Property(e => e.LastName).HasColumnName("last_name");
     builder.Property(e => e.Position).HasColumnName("position");

@@ -8,9 +8,7 @@ public class MenuItemConfiguration : IEntityTypeConfiguration<MenuItem>
 {
   public void Configure(EntityTypeBuilder<MenuItem> builder)
   {
-    builder.HasKey(mi => mi.ItemId);
-
-    builder.Property(mi => mi.ItemId).HasColumnName("item_id");
+    builder.Property(mi => mi.Id).HasColumnName("item_id");
     builder.Property(mi => mi.Description).HasColumnName("description");
     builder.Property(mi => mi.Name).HasColumnName("name");
     builder.Property(mi => mi.Price).HasColumnType("decimal(8, 2)").HasColumnName("price");

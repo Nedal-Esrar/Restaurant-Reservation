@@ -8,7 +8,7 @@ public class TableConfiguration : IEntityTypeConfiguration<Table>
 {
   public void Configure(EntityTypeBuilder<Table> builder)
   {
-    builder.Property(t => t.TableId).HasColumnName("table_id");
+    builder.Property(t => t.Id).HasColumnName("table_id");
     builder.Property(t => t.Capacity).HasColumnName("capacity");
     builder.Property(t => t.RestaurantId).HasColumnName("restaurant_id");
 

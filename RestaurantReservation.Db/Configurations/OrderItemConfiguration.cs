@@ -8,7 +8,7 @@ public class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
 {
   public void Configure(EntityTypeBuilder<OrderItem> builder)
   {
-    builder.Property(i => i.OrderItemId).HasColumnName("order_item_id");
+    builder.Property(i => i.Id).HasColumnName("order_item_id");
     builder.Property(i => i.ItemId).HasColumnName("item_id");
     builder.Property(i => i.OrderId).HasColumnName("order_id");
     builder.Property(i => i.Quantity).HasColumnName("quantity");

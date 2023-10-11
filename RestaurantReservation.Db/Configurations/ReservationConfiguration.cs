@@ -8,7 +8,7 @@ public class ReservationConfiguration : IEntityTypeConfiguration<Reservation>
 {
   public void Configure(EntityTypeBuilder<Reservation> builder)
   {
-    builder.Property(r => r.ReservationId).HasColumnName("reservation_id");
+    builder.Property(r => r.Id).HasColumnName("reservation_id");
     builder.Property(r => r.CustomerId).HasColumnName("customer_id");
     builder.Property(r => r.PartySize).HasColumnName("party_size");
     builder.Property(r => r.ReservationDate).HasColumnName("reservation_date");

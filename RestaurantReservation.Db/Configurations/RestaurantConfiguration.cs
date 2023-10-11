@@ -8,7 +8,7 @@ public class RestaurantConfiguration : IEntityTypeConfiguration<Restaurant>
 {
   public void Configure(EntityTypeBuilder<Restaurant> builder)
   {
-    builder.Property(r => r.RestaurantId).HasColumnName("restaurant_id");
+    builder.Property(r => r.Id).HasColumnName("restaurant_id");
     builder.Property(r => r.Address).HasColumnName("address");
     builder.Property(r => r.Name).HasColumnName("name");
     builder.Property(r => r.OpeningHours).HasColumnName("opening_hours");
