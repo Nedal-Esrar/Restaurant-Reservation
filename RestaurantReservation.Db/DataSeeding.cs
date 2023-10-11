@@ -187,6 +187,14 @@ public static class DataSeeding
       OrderDate = DateTime.Parse("2023-10-10 22:00:00"),
       ReservationId = 5,
       TotalAmount = 8
+    },
+    new()
+    {
+      Id = 6,
+      EmployeeId = 1,
+      OrderDate = DateTime.Parse("2023-10-10 22:10:00"),
+      ReservationId = 5,
+      TotalAmount = 10
     }
   };
   
