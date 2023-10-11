@@ -18,7 +18,7 @@ public class TableRepository : Repository<Table>
 
     var table = await Context.Tables
       .Include(t => t.Reservations)
-      .FirstAsync();
+      .FirstAsync(t => t.Id == id);
     
     foreach (var tableReservation in table.Reservations)
     {
