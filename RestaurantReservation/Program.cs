@@ -648,7 +648,7 @@ Console.WriteLine($"Average Order Amount for Customer with id 1: {averageOrderAm
 #region Get All Reservations With Details
 
 foreach (var r in await reservationRepository.GetReservationsWithDetailsAsync())
-  Console.WriteLine($"{r.ReservationId},{r.CustomerId},{r.ReservationId}");
+  Console.WriteLine($"{r.ReservationId},{r.CustomerId},{r.RestaurantId}");
 
 #endregion
 
@@ -678,5 +678,13 @@ Console.WriteLine(await restaurantRepository.CalculateRestaurantRevenueAsync(1))
 
 foreach (var c in await customerRepository.FindCustomersWithPartySizeLargerThanAsync(3))
   Console.WriteLine(c.Id);
+
+#endregion
+
+#region test deleting related object
+
+await orderRepository.DeleteAsync(1);
+
+await customerRepository.DeleteAsync(1);
 
 #endregion
