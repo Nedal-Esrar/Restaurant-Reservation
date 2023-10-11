@@ -2,11 +2,11 @@ namespace RestaurantReservation.Db.Models;
 
 public class Order : Entity
 {
-  public int ReservationId { get; set; }
+  public int? ReservationId { get; set; }
 
   public Reservation Reservation { get; set; }
 
-  public int EmployeeId { get; set; }
+  public int? EmployeeId { get; set; }
 
   public Employee Employee { get; set; }
 

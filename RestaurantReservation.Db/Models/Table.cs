@@ -2,7 +2,7 @@ namespace RestaurantReservation.Db.Models;
 
 public class Table : Entity
 {
-  public int RestaurantId { get; set; }
+  public int? RestaurantId { get; set; }
 
   public Restaurant Restaurant { get; set; }
 
