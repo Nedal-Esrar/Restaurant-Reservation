@@ -12,7 +12,7 @@ public abstract class Repository<TEntity> where TEntity : Entity
     Context = context ?? throw new ArgumentNullException(nameof(context));
   }
 
-  public async Task CreateAsync(TEntity entity)
+  public virtual async Task CreateAsync(TEntity entity)
   {
     if (entity is null) throw new ArgumentNullException();
 
@@ -21,7 +21,7 @@ public abstract class Repository<TEntity> where TEntity : Entity
     await Context.SaveChangesAsync();
   }
   
-  public async Task UpdateAsync(TEntity entity)
+  public virtual async Task UpdateAsync(TEntity entity)
   {
     if (entity is null) throw new ArgumentNullException();
 
@@ -33,7 +33,7 @@ public abstract class Repository<TEntity> where TEntity : Entity
     await Context.SaveChangesAsync();
   }
 
-  public async Task DeleteAsync(int id)
+  public virtual async Task DeleteAsync(int id)
   {
     var entity = await Context.Set<TEntity>().FindAsync(id) ??
                  throw new NotFoundException(StandardMessages.GenerateNotFoundMessage("entity", id));
@@ -43,7 +43,7 @@ public abstract class Repository<TEntity> where TEntity : Entity
     await Context.SaveChangesAsync();
   }
 
-  public async Task<bool> IsExistAsync(int id)
+  public virtual async Task<bool> IsExistAsync(int id)
   {
     return await Context.Set<TEntity>().AnyAsync(e => e.Id == id);
   }
