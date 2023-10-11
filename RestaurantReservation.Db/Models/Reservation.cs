@@ -1,9 +1,7 @@
 namespace RestaurantReservation.Db.Models;
 
-public class Reservation
+public class Reservation : Entity
 {
-  public int ReservationId { get; set; }
-
   public int CustomerId { get; set; }
 
   public Customer Customer { get; set; }
