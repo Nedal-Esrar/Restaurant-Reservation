@@ -21,7 +21,7 @@ public static class DataSeeding
   private static Customer[] GetCustomers() => new Customer[] {
     new()
     {
-      CustomerId = 1,
+      Id = 1,
       Email = "customer1@example.com",
       FirstName = "John",
       LastName = "Doe",
@@ -29,7 +29,7 @@ public static class DataSeeding
     },
     new()
     {
-      CustomerId = 2,
+      Id = 2,
       Email = "customer2@example.com",
       FirstName = "Jane",
       LastName = "Smith",
@@ -37,7 +37,7 @@ public static class DataSeeding
     },
     new()
     {
-      CustomerId = 3,
+      Id = 3,
       Email = "customer3@example.com",
       FirstName = "Mike",
       LastName = "Johnson",
@@ -45,7 +45,7 @@ public static class DataSeeding
     },
     new()
     {
-      CustomerId = 4,
+      Id = 4,
       Email = "customer4@example.com",
       FirstName = "Emily",
       LastName = "Wilson",
@@ -53,7 +53,7 @@ public static class DataSeeding
     },
     new()
     {
-      CustomerId = 5,
+      Id = 5,
       Email = "customer5@example.com",
       FirstName = "Chris",
       LastName = "Brown",
@@ -64,7 +64,7 @@ public static class DataSeeding
   private static Employee[] GetEmployees() => new Employee[] {
     new()
     {
-      EmployeeId = 1,
+      Id = 1,
       FirstName = "Alice",
       LastName = "Smith",
       Position = EmployeePosition.Manager,
@@ -72,7 +72,7 @@ public static class DataSeeding
     },
     new()
     {
-      EmployeeId = 2,
+      Id = 2,
       FirstName = "Bob",
       LastName = "Johnson",
       Position = EmployeePosition.Chef,
@@ -80,7 +80,7 @@ public static class DataSeeding
     },
     new()
     {
-      EmployeeId = 3,
+      Id = 3,
       FirstName = "Charlie",
       LastName = "Brown",
       Position = EmployeePosition.Manager,
@@ -88,7 +88,7 @@ public static class DataSeeding
     },
     new()
     {
-      EmployeeId = 4,
+      Id = 4,
       FirstName = "David",
       LastName = "Wilson",
       Position = EmployeePosition.Waiter,
@@ -96,7 +96,7 @@ public static class DataSeeding
     },
     new()
     {
-      EmployeeId = 5,
+      Id = 5,
       FirstName = "Eva",
       LastName = "Davis",
       Position = EmployeePosition.Bartender,
@@ -107,7 +107,7 @@ public static class DataSeeding
   private static MenuItem[] GetMenuItems() => new MenuItem[] {
     new()
     {
-      ItemId = 1,
+      Id = 1,
       Description = "Delicious Burger",
       Name = "Burger",
       Price = 10.99m,
@@ -115,7 +115,7 @@ public static class DataSeeding
     },
     new()
     {
-      ItemId = 2,
+      Id = 2,
       Description = "Classic Margherita Pizza",
       Name = "Margherita Pizza",
       Price = 12.99m,
@@ -123,7 +123,7 @@ public static class DataSeeding
     },
     new()
     {
-      ItemId = 3,
+      Id = 3,
       Description = "Fresh Garden Salad",
       Name = "Garden Salad",
       Price = 7.99m,
@@ -131,7 +131,7 @@ public static class DataSeeding
     },
     new()
     {
-      ItemId = 4,
+      Id = 4,
       Description = "Spaghetti with Meatballs",
       Name = "Spaghetti",
       Price = 14.99m,
@@ -139,7 +139,7 @@ public static class DataSeeding
     },
     new()
     {
-      ItemId = 5,
+      Id = 5,
       Description = "Chocolate Brownie Sundae",
       Name = "Brownie Sundae",
       Price = 8.99m,
@@ -150,7 +150,7 @@ public static class DataSeeding
   private static Order[] GetOrders() => new Order[] {
     new()
     {
-      OrderId = 1,
+      Id = 1,
       EmployeeId = 1,
       OrderDate = DateTime.Parse("2023-09-30 19:30:00"),
       ReservationId = 1,
@@ -158,7 +158,7 @@ public static class DataSeeding
     },
     new()
     {
-      OrderId = 2,
+      Id = 2,
       EmployeeId = 2,
       OrderDate = DateTime.Parse("2023-10-02 20:00:00"),
       ReservationId = 2,
@@ -166,7 +166,7 @@ public static class DataSeeding
     },
     new()
     {
-      OrderId = 3,
+      Id = 3,
       EmployeeId = 3,
       OrderDate = DateTime.Parse("2023-10-05 21:15:00"),
       ReservationId = 3,
@@ -174,7 +174,7 @@ public static class DataSeeding
     },
     new()
     {
-      OrderId = 4,
+      Id = 4,
       EmployeeId = 4,
       OrderDate = DateTime.Parse("2023-10-07 18:45:00"),
       ReservationId = 4,
@@ -182,7 +182,7 @@ public static class DataSeeding
     },
     new()
     {
-      OrderId = 5,
+      Id = 5,
       EmployeeId = 5,
       OrderDate = DateTime.Parse("2023-10-10 22:00:00"),
       ReservationId = 5,
@@ -193,35 +193,35 @@ public static class DataSeeding
   private static OrderItem[] GetOrderItems() => new OrderItem[] {
     new()
     {
-      OrderItemId = 1,
+      Id = 1,
       ItemId = 1,
       OrderId = 1,
       Quantity = 2
     },
     new()
     {
-      OrderItemId = 2,
+      Id = 2,
       ItemId = 2,
       OrderId = 2,
       Quantity = 1
     },
     new()
     {
-      OrderItemId = 3,
+      Id = 3,
       ItemId = 3,
       OrderId = 3,
       Quantity = 3
     },
     new()
     {
-      OrderItemId = 4,
+      Id = 4,
       ItemId = 4,
       OrderId = 4,
       Quantity = 2
     },
     new()
     {
-      OrderItemId = 5,
+      Id = 5,
       ItemId = 5,
       OrderId = 5,
       Quantity = 1
@@ -231,7 +231,7 @@ public static class DataSeeding
   private static Reservation[] GetReservations() => new Reservation[] {
     new()
     {
-      ReservationId = 1,
+      Id = 1,
       CustomerId = 1,
       PartySize = 4,
       ReservationDate = DateTime.Parse("2023-09-30 18:00:00"),
@@ -240,7 +240,7 @@ public static class DataSeeding
     },
     new()
     {
-      ReservationId = 2,
+      Id = 2,
       CustomerId = 2,
       PartySize = 2,
       ReservationDate = DateTime.Parse("2023-10-02 19:30:00"),
@@ -249,7 +249,7 @@ public static class DataSeeding
     },
     new()
     {
-      ReservationId = 3,
+      Id = 3,
       CustomerId = 3,
       PartySize = 6,
       ReservationDate = DateTime.Parse("2023-10-05 20:15:00"),
@@ -258,7 +258,7 @@ public static class DataSeeding
     },
     new()
     {
-      ReservationId = 4,
+      Id = 4,
       CustomerId = 4,
       PartySize = 3,
       ReservationDate = DateTime.Parse("2023-10-07 17:45:00"),
@@ -267,7 +267,7 @@ public static class DataSeeding
     },
     new()
     {
-      ReservationId = 5,
+      Id = 5,
       CustomerId = 5,
       PartySize = 5,
       ReservationDate = DateTime.Parse("2023-10-10 21:00:00"),
@@ -279,7 +279,7 @@ public static class DataSeeding
   private static Restaurant[] GetRestaurants() => new Restaurant[] {
     new()
     {
-      RestaurantId = 1,
+      Id = 1,
       Address = "123 Main St",
       Name = "Restaurant A",
       OpeningHours = "9:00 AM - 10:00 PM",
@@ -287,7 +287,7 @@ public static class DataSeeding
     },
     new()
     {
-      RestaurantId = 2,
+      Id = 2,
       Address = "456 Elm St",
       Name = "Restaurant B",
       OpeningHours = "10:00 AM - 9:00 PM",
@@ -295,7 +295,7 @@ public static class DataSeeding
     },
     new()
     {
-      RestaurantId = 3,
+      Id = 3,
       Address = "789 Oak St",
       Name = "Restaurant C",
       OpeningHours = "8:00 AM - 11:00 PM",
@@ -303,7 +303,7 @@ public static class DataSeeding
     },
     new()
     {
-      RestaurantId = 4,
+      Id = 4,
       Address = "101 Pine St",
       Name = "Restaurant D",
       OpeningHours = "11:00 AM - 8:00 PM",
@@ -311,7 +311,7 @@ public static class DataSeeding
     },
     new()
     {
-      RestaurantId = 5,
+      Id = 5,
       Address = "222 Cedar St",
       Name = "Restaurant E",
       OpeningHours = "7:00 AM - 9:00 PM",
@@ -322,31 +322,31 @@ public static class DataSeeding
   private static Table[] GetTables() => new Table[] {
     new()
     {
-      TableId = 1,
+      Id = 1,
       Capacity = 4,
       RestaurantId = 1
     },
     new()
     {
-      TableId = 2,
+      Id = 2,
       Capacity = 2,
       RestaurantId = 2
     },
     new()
     {
-      TableId = 3,
+      Id = 3,
       Capacity = 6,
       RestaurantId = 3
     },
     new()
     {
-      TableId = 4,
+      Id = 4,
       Capacity = 3,
       RestaurantId = 4
     },
     new()
     {
-      TableId = 5,
+      Id = 5,
       Capacity = 5,
       RestaurantId = 5
     }
