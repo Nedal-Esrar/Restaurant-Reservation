@@ -4,7 +4,7 @@ public class ReservationWithDetails
 {
   public int ReservationId { get; set; }
   
-  public int ReservationTableId { get; set; }
+  public int? ReservationTableId { get; set; }
   
   public DateTime ReservationDate { get; set; }
   
