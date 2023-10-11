@@ -15,12 +15,10 @@ public class OrderItemConfiguration : IEntityTypeConfiguration<OrderItem>
 
     builder.HasOne(i => i.Item)
       .WithMany(mi => mi.OrderItems)
-      .HasForeignKey(i => i.ItemId)
-      .OnDelete(DeleteBehavior.ClientSetNull);
+      .HasForeignKey(i => i.ItemId);
 
     builder.HasOne(i => i.Order)
       .WithMany(o => o.OrderItems)
-      .HasForeignKey(i => i.OrderId)
-      .OnDelete(DeleteBehavior.ClientSetNull);
+      .HasForeignKey(i => i.OrderId);
   }
 }

@@ -15,6 +15,7 @@ public class TableConfiguration : IEntityTypeConfiguration<Table>
     builder.HasOne(t => t.Restaurant)
       .WithMany(r => r.Tables)
       .HasForeignKey(t => t.RestaurantId)
-      .OnDelete(DeleteBehavior.ClientSetNull);
+      .IsRequired(false)
+      .OnDelete(DeleteBehavior.NoAction);
   }
 }

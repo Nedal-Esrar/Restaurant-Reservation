@@ -18,16 +18,19 @@ public class ReservationConfiguration : IEntityTypeConfiguration<Reservation>
     builder.HasOne(r => r.Customer)
       .WithMany(c => c.Reservations)
       .HasForeignKey(r => r.CustomerId)
-      .OnDelete(DeleteBehavior.ClientSetNull);
+      .IsRequired(false)
+      .OnDelete(DeleteBehavior.NoAction);
 
     builder.HasOne(r => r.Restaurant)
       .WithMany(rr => rr.Reservations)
       .HasForeignKey(r => r.RestaurantId)
-      .OnDelete(DeleteBehavior.ClientSetNull);
+      .IsRequired(false)
+      .OnDelete(DeleteBehavior.NoAction);
 
     builder.HasOne(r => r.Table)
       .WithMany(t => t.Reservations)
       .HasForeignKey(r => r.TableId)
-      .OnDelete(DeleteBehavior.ClientSetNull);
+      .IsRequired(false)
+      .OnDelete(DeleteBehavior.NoAction);
   }
 }

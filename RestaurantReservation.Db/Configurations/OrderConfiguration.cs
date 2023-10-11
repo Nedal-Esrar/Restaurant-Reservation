@@ -17,11 +17,13 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
     builder.HasOne(o => o.Employee)
       .WithMany(e => e.Orders)
       .HasForeignKey(o => o.EmployeeId)
-      .OnDelete(DeleteBehavior.ClientSetNull);
+      .IsRequired(false)
+      .OnDelete(DeleteBehavior.NoAction);
 
     builder.HasOne(o => o.Reservation)
       .WithMany(r => r.Orders)
       .HasForeignKey(o => o.ReservationId)
-      .OnDelete(DeleteBehavior.ClientSetNull);
+      .IsRequired(false)
+      .OnDelete(DeleteBehavior.NoAction);
   }
 }

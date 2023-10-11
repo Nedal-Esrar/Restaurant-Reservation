@@ -17,6 +17,7 @@ public class MenuItemConfiguration : IEntityTypeConfiguration<MenuItem>
     builder.HasOne(mi => mi.Restaurant)
       .WithMany(r => r.MenuItems)
       .HasForeignKey(mi => mi.RestaurantId)
-      .OnDelete(DeleteBehavior.ClientSetNull);
+      .IsRequired(false)
+      .OnDelete(DeleteBehavior.NoAction);
   }
 }
