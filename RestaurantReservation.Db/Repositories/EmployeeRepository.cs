@@ -22,4 +22,25 @@ public class EmployeeRepository : Repository<Employee>, IEmployeeRepository
   {
     return await Context.EmployeesWithDetails.ToListAsync();
   }
+  
+  public override async Task DeleteAsync(int id)
+  {
+    if (!await IsExistAsync(id))
+    {
+      throw new NotFoundException(StandardMessages.GenerateNotFoundMessage("Employee", id));
+    }
+
+    var employee = await Context.Employees
+      .Include(e => e.Orders)
+      .FirstAsync(e => e.Id == id);
+    
+    foreach (var employeeOrder in employee.Orders)
+    {
+      employeeOrder.EmployeeId = null;
+    }
+
+    Context.Employees.Remove(employee);
+
+    await Context.SaveChangesAsync();
+  }
 }

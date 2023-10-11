@@ -24,4 +24,37 @@ public class RestaurantRepository : Repository<Restaurant>, IRestaurantRepositor
 
     return revenue;
   }
+  
+  public override async Task DeleteAsync(int id)
+  {
+    if (!await IsExistAsync(id))
+    {
+      throw new NotFoundException(StandardMessages.GenerateNotFoundMessage("Reservation", id));
+    }
+  
+    var restaurant = await Context.Restaurants
+      .Include(rs => rs.Reservations)
+      .Include(rs => rs.Employees)
+      .Include(rs => rs.Tables)
+      .FirstAsync(c => c.Id == id);
+    
+    foreach (var restaurantReservation in restaurant.Reservations)
+    {
+      restaurantReservation.RestaurantId = null;
+    }
+    
+    foreach (var restaurantEmployee in restaurant.Employees)
+    {
+      restaurantEmployee.RestaurantId = null;
+    }
+    
+    foreach (var restaurantTable in restaurant.Tables)
+    {
+      restaurantTable.RestaurantId = null;
+    }
+    
+    Context.Restaurants.Remove(restaurant);
+  
+    await Context.SaveChangesAsync();
+  }
 }

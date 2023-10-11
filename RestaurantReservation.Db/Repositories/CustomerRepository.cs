@@ -16,4 +16,25 @@ public class CustomerRepository : Repository<Customer>, ICustomerRepository
       .FromSqlInterpolated($"EXEC sp_FindCustomersWithPartySizeLargerThan {minPartySize}")
       .ToListAsync();
   }
+  
+  public override async Task DeleteAsync(int id)
+  {
+    if (!await IsExistAsync(id))
+    {
+      throw new NotFoundException(StandardMessages.GenerateNotFoundMessage("Customer", id));
+    }
+
+    var customer = await Context.Customers
+      .Include(c => c.Reservations)
+      .FirstAsync(c => c.Id == id);
+    
+    foreach (var customerReservation in customer.Reservations)
+    {
+      customerReservation.CustomerId = null;
+    }
+    
+    Context.Customers.Remove(customer);
+
+    await Context.SaveChangesAsync();
+  }
 }

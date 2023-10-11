@@ -26,4 +26,25 @@ public class ReservationRepository : Repository<Reservation>, IReservationReposi
   {
     return await Context.ReservationsWithDetails.ToListAsync();
   }
+  
+  public override async Task DeleteAsync(int id)
+  {
+    if (!await IsExistAsync(id))
+    {
+      throw new NotFoundException(StandardMessages.GenerateNotFoundMessage("Reservation", id));
+    }
+
+    var reservation = await Context.Reservations
+      .Include(r => r.Orders)
+      .FirstAsync(c => c.Id == id);
+    
+    foreach (var reservationOrder in reservation.Orders)
+    {
+      reservationOrder.ReservationId = null;
+    }
+    
+    Context.Reservations.Remove(reservation);
+
+    await Context.SaveChangesAsync();
+  }
 }
