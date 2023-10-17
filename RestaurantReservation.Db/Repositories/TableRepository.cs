@@ -1,14 +1,15 @@
 using Microsoft.EntityFrameworkCore;
+using RestaurantReservation.Db.Interfaces;
 using RestaurantReservation.Db.Models;
 
 namespace RestaurantReservation.Db.Repositories;
 
-public class TableRepository : Repository<Table>
+public class TableRepository : Repository<Table>, ITableRepository
 {
   public TableRepository(RestaurantReservationDbContext context) : base(context)
   {
   }
-  
+
   public override async Task DeleteAsync(int id)
   {
     if (!await IsExistAsync(id))
