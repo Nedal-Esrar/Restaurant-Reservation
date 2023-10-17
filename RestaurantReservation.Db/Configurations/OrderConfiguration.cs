@@ -12,7 +12,7 @@ public class OrderConfiguration : IEntityTypeConfiguration<Order>
     builder.Property(o => o.EmployeeId).HasColumnName("employee_id");
     builder.Property(o => o.OrderDate).HasColumnName("order_date");
     builder.Property(o => o.ReservationId).HasColumnName("reservation_id");
-    builder.Property(o => o.TotalAmount).HasColumnName("total_amount");
+    builder.Property(o => o.TotalAmount).HasColumnType("decimal(8, 2)").HasColumnName("total_amount");
 
     builder.HasOne(o => o.Employee)
       .WithMany(e => e.Orders)
