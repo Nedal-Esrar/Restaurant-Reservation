@@ -24,7 +24,7 @@ public class OrderRepository : Repository<Order>, IOrderRepository
       .ToListAsync();
   }
 
-  public async Task<double> CalculateAverageOrderAmountAsync(int employeeId)
+  public async Task<decimal> CalculateAverageOrderAmountAsync(int employeeId)
   {
     if (!await Context.Employees.AnyAsync(e => e.Id == employeeId))
     {

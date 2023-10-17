@@ -6,5 +6,5 @@ public interface IOrderRepository : IRepository<Order>
 {
   Task<IEnumerable<Order>> ListOrdersAndMenuItemsAsync(int reservationId);
 
-  Task<double> CalculateAverageOrderAmountAsync(int employeeId);
+  Task<decimal> CalculateAverageOrderAmountAsync(int employeeId);
 }
