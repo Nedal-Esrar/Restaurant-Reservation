@@ -9,6 +9,8 @@ public interface IRepository<TEntity> where TEntity : Entity
   Task<(IEnumerable<TEntity>, PaginationMetadata)> GetAllAsync(Expression<Func<TEntity, bool>> filter,
     int pageNumber, int pageSize);
   
+  Task<TEntity?> GetByIdAsync(int id);
+  
   Task<TEntity> CreateAsync(TEntity entity);
 
   Task UpdateAsync(TEntity entity);

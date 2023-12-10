@@ -40,6 +40,11 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
     return (items, paginationMetadata);
   }
 
+  public async Task<TEntity?> GetByIdAsync(int id)
+  {
+    return await DbSet.FindAsync(id);
+  }
+
   public virtual async Task<TEntity> CreateAsync(TEntity entity)
   {
     if (entity is null) throw new ArgumentNullException();
