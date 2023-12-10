@@ -11,4 +11,6 @@ public class ValidationMessages
   public const string PasswordDigits = "Password must include digits";
 
   public const string PasswordSpecialCharacters = "Password must include special characters";
+  
+  public const string ValidPhoneNumber = "'{PropertyName}' Must be a valid phone number.";
 }
