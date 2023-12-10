@@ -5,7 +5,7 @@ namespace RestaurantReservation.Db.Interfaces;
 
 public interface IRepository<TEntity> where TEntity : Entity
 {
-  Task CreateAsync(TEntity entity);
+  Task<TEntity> CreateAsync(TEntity entity);
 
   Task UpdateAsync(TEntity entity);
 

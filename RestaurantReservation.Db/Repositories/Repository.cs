@@ -16,13 +16,15 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
     Context = context ?? throw new ArgumentNullException(nameof(context));
   }
 
-  public virtual async Task CreateAsync(TEntity entity)
+  public virtual async Task<TEntity> CreateAsync(TEntity entity)
   {
     if (entity is null) throw new ArgumentNullException();
 
     await Context.Set<TEntity>().AddAsync(entity);
 
     await Context.SaveChangesAsync();
+
+    return entity;
   }
   
   public virtual async Task UpdateAsync(TEntity entity)
