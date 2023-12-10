@@ -1,6 +1,6 @@
 using RestaurantReservation.Db.Models.Enums;
 
-namespace RestaurantReservation.Db.Models;
+namespace RestaurantReservation.Db.Models.Entities;
 
 public class Employee : Entity
 {
