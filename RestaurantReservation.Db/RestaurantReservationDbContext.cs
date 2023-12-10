@@ -40,7 +40,7 @@ public class RestaurantReservationDbContext : DbContext
   {
     modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     
-    modelBuilder.Seed();
+    modelBuilder.SeedTables();
 
     modelBuilder.Entity<ReservationWithDetails>().HasNoKey().ToView(nameof(ReservationsWithDetails));
     
