@@ -44,7 +44,7 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
   {
     if (entity is null) throw new ArgumentNullException();
 
-    await Context.Set<TEntity>().AddAsync(entity);
+    await DbSet.AddAsync(entity);
 
     await Context.SaveChangesAsync();
 
@@ -58,7 +58,7 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
     if (!await IsExistAsync(entity.Id))
       throw new NotFoundException(StandardMessages.GenerateNotFoundMessage(nameof(entity), entity.Id));
 
-    Context.Set<TEntity>().Update(entity);
+    DbSet.Update(entity);
 
     await Context.SaveChangesAsync();
   }
@@ -68,13 +68,13 @@ public abstract class Repository<TEntity> : IRepository<TEntity> where TEntity :
     var entity = await Context.Set<TEntity>().FindAsync(id) ??
                  throw new NotFoundException(StandardMessages.GenerateNotFoundMessage("entity", id));
 
-    Context.Set<TEntity>().Remove(entity);
+    DbSet.Remove(entity);
 
     await Context.SaveChangesAsync();
   }
 
   public virtual async Task<bool> IsExistAsync(int id)
   {
-    return await Context.Set<TEntity>().AnyAsync(e => e.Id == id);
+    return await DbSet.AnyAsync(e => e.Id == id);
   }
 }
