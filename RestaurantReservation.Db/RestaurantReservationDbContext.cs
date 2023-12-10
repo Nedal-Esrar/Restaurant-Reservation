@@ -1,5 +1,6 @@
 using System.Reflection;
 using Microsoft.EntityFrameworkCore;
+using RestaurantReservation.Db.Extensions;
 using RestaurantReservation.Db.Models;
 
 namespace RestaurantReservation.Db;
@@ -34,7 +35,7 @@ public class RestaurantReservationDbContext : DbContext
   {
     modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     
-    DataSeeding.Seed(modelBuilder);
+    modelBuilder.Seed();
 
     modelBuilder.Entity<ReservationWithDetails>().HasNoKey().ToView(nameof(ReservationsWithDetails));
     

@@ -2,11 +2,11 @@ using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Db.Models;
 using RestaurantReservation.Db.Models.Enums;
 
-namespace RestaurantReservation.Db;
+namespace RestaurantReservation.Db.Extensions;
 
 public static class DataSeeding
 {
-  public static void Seed(ModelBuilder modelBuilder)
+  public static void Seed(this ModelBuilder modelBuilder)
   {
     modelBuilder.Entity<Customer>().HasData(GetCustomers());
     modelBuilder.Entity<Employee>().HasData(GetEmployees());
