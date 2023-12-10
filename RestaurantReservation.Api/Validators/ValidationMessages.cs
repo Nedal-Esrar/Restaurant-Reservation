@@ -2,6 +2,8 @@ namespace RestaurantReservation.Api.Validators;
 
 public class ValidationMessages
 {
+  public const string ValidName = "'{PropertyName}' should only contain letters and spaces.";
+  
   public const string PasswordUpperCase = "Password must include upper case letters.";
 
   public const string PasswordLowerCase = "Password must include lower case letters.";

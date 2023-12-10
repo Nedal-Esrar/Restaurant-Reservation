@@ -4,6 +4,14 @@ namespace RestaurantReservation.Api.Validators;
 
 public static class ValidationExtensions
 {
+  public static IRuleBuilderOptions<T, string> ValidName<T>(this IRuleBuilder<T, string> ruleBuilder)
+  {
+    return ruleBuilder
+      .Matches(@"^[A-Za-z\s]+$")
+      .WithMessage(ValidationMessages.ValidName)
+      .Length(3, 30);
+  }
+  
   public static IRuleBuilderOptions<T, string> StrongPassword<T>(this IRuleBuilder<T, string> ruleBuilder)
   {
     return ruleBuilder.MinimumLength(8)
