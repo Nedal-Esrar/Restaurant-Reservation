@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using RestaurantReservation.Db.Exceptions;
 using RestaurantReservation.Db.Interfaces;
 using RestaurantReservation.Db.Models;
 
