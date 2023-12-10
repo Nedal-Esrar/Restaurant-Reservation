@@ -1,4 +1,4 @@
-namespace RestaurantReservation.Db;
+namespace RestaurantReservation.Db.Utilities;
 
 public static class StandardMessages
 {

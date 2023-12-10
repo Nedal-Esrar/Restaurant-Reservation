@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using RestaurantReservation.Db.Exceptions;
 using RestaurantReservation.Db.Interfaces;
 using RestaurantReservation.Db.Models;
+using RestaurantReservation.Db.Utilities;
 
 namespace RestaurantReservation.Db.Repositories;
 
