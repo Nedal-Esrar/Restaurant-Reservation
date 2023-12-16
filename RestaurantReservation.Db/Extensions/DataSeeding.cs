@@ -7,7 +7,7 @@ namespace RestaurantReservation.Db.Extensions;
 
 public static class DataSeeding
 {
-  public static void Seed(this ModelBuilder modelBuilder)
+  public static void SeedTables(this ModelBuilder modelBuilder)
   {
     modelBuilder.Entity<Customer>().HasData(GetCustomers());
     modelBuilder.Entity<Employee>().HasData(GetEmployees());
@@ -17,6 +17,24 @@ public static class DataSeeding
     modelBuilder.Entity<Reservation>().HasData(GetReservations());
     modelBuilder.Entity<Restaurant>().HasData(GetRestaurants());
     modelBuilder.Entity<Table>().HasData(GetTables());
+    modelBuilder.Entity<Role>().HasData(GetRoles());
+  }
+
+  private static Role[] GetRoles()
+  {
+    return new Role[]
+    {
+      new()
+      {
+        Id = 1,
+        Name = "User"
+      },
+      new()
+      {
+        Id = 2,
+        Name = "Admin"
+      }
+    };
   }
   
   private static Customer[] GetCustomers() => new Customer[] {

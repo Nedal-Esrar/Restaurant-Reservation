@@ -31,12 +31,16 @@ public class RestaurantReservationDbContext : DbContext
   public DbSet<EmployeeWithDetails> EmployeesWithDetails { get; set; }
 
   public DbSet<Table> Tables { get; set; }
+  
+  public DbSet<User> Users { get; set; }
+  
+  public DbSet<Role> Roles { get; set; }
 
   protected override void OnModelCreating(ModelBuilder modelBuilder)
   {
     modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
     
-    modelBuilder.Seed();
+    modelBuilder.SeedTables();
 
     modelBuilder.Entity<ReservationWithDetails>().HasNoKey().ToView(nameof(ReservationsWithDetails));
     
